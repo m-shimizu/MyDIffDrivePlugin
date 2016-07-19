@@ -40,7 +40,7 @@ namespace gazebo
     private: transport::SubscriberPtr velSub;
 
     private: physics::ModelPtr model;
-    private: physics::JointPtr leftJoint, rightJoint;
+    private: physics::JointPtr leftJoint, rightJoint, sholderJoint;
     private: event::ConnectionPtr updateConnection;
     private: double wheelSpeed[2];
     private: double torque;

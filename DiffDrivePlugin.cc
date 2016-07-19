@@ -49,10 +49,16 @@ void DiffDrivePlugin::Load(physics::ModelPtr _model,
   if (!_sdf->HasElement("right_joint"))
     gzerr << "DiffDrive plugin missing <right_joint> element\n";
 
+  if (!_sdf->HasElement("sholder_joint"))
+    gzerr << "DiffDrive plugin missing <sholder_joint> element\n";
+
   this->leftJoint = _model->GetJoint(
       _sdf->GetElement("left_joint")->Get<std::string>());
   this->rightJoint = _model->GetJoint(
       _sdf->GetElement("right_joint")->Get<std::string>());
+
+  this->sholderJoint = _model->GetJoint(
+      _sdf->GetElement("sholder_joint")->Get<std::string>());
 
   if (_sdf->HasElement("torque"))
   {
@@ -97,6 +103,12 @@ void DiffDrivePlugin::OnVelMsg(ConstPosePtr &_msg)
 
   this->wheelSpeed[LEFT] = vr + va * this->wheelSeparation / 2.0;
   this->wheelSpeed[RIGHT] = vr - va * this->wheelSeparation / 2.0;
+
+  double leftVelDesired = (this->wheelSpeed[LEFT] / this->wheelRadius);
+  double rightVelDesired = (this->wheelSpeed[RIGHT] / this->wheelRadius);
+
+  this->leftJoint->SetVelocity(0, leftVelDesired);
+  this->rightJoint->SetVelocity(0, rightVelDesired);
 }
 
 int	doslike_kbhit(void)
@@ -147,16 +159,20 @@ void	DiffDrivePlugin::check_key_command(void)
 		switch(cmd)
 		{
 			case 'q': left_v += 0.1;
-                                  left_v = _MIN(left_v, 1.0);
+                                  left_v = _MIN(left_v, 1);
+				  break;
+			case 'a': left_v = 0;
 				  break;
 			case 'z': left_v -= 0.1;
-                                  left_v = _MAX(left_v, -1.0);
+                                  left_v = _MAX(left_v, -1);
 				  break;
 			case 'e': right_v += 0.1;
-                                  right_v = _MIN(left_v, 1.0);
+                                  right_v = _MIN(right_v, 1);
+				  break;
+			case 'd': right_v = 0;
 				  break;
 			case 'c': right_v -= 0.1;
-                                  right_v = _MAX(left_v, -1.0);
+                                  right_v = _MAX(right_v, -1);
 				  break;
 		}
 		this->leftJoint->SetVelocity(0, left_v);
@@ -181,12 +197,6 @@ void DiffDrivePlugin::OnUpdate()
   common::Time currTime = this->model->GetWorld()->GetSimTime();
   common::Time stepTime = currTime - this->prevUpdateTime;
   */
-
-  double leftVelDesired = (this->wheelSpeed[LEFT] / this->wheelRadius);
-  double rightVelDesired = (this->wheelSpeed[RIGHT] / this->wheelRadius);
-
-  this->leftJoint->SetVelocity(0, leftVelDesired);
-  this->rightJoint->SetVelocity(0, rightVelDesired);
 
   check_key_command();
 }
