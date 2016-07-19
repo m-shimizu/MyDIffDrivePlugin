@@ -1,3 +1,4 @@
+/* This is my first plugin file. */
 /*
  * Copyright (C) 2012-2015 Open Source Robotics Foundation
  *
