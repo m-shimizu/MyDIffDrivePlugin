@@ -15,6 +15,7 @@ endif()
 include_directories(${GAZEBO_INCLUDE_DIRS} ${OGRE_INCLUDE_DIRS} ${OGRE-Terrain_INCLUDE_DIRS})
 link_directories(${GAZEBO_LIBRARY_DIRS} ${OGRE_LIBRARY_DIRS})
 
+add_compile_options(-std=gnu++11)
 add_library(MyDiffDrivePlugin SHARED DiffDrivePlugin.cc)
 target_link_libraries(MyDiffDrivePlugin ${GAZEBO_LIBRARIES})
 
