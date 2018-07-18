@@ -1,0 +1,46 @@
+Info on the element
+___________________
+05/01/2018 15:53:16
+
+Name of the document      :,Unnamed
+Label Name                :,Pad
+Internal Name             :,Pad
+Name of the element       :,Face8
+Object type               :,Solid
+Mouse coordinates         :,  X:,0.0,mm,  Y:,0.0,mm,  Z:,0.0,mm
+Perimeter of face         :,0.69282032304,mm
+Perimeter of the shape    :,1.98564064608,mm
+
+
+Plan                     :, XY:,0.0°, coordinates:,[,0.0 , 0.0,]  [,0.0 , 0.0,]
+Plan                     :, YZ:,0.0°, coordinates:,[,0.0 , 0.0,]  [,0.0 , 0.0,]
+Plan                     :, ZX:,0.0°, coordinates:,[,0.0 , 0.0,]  [,0.0 , 0.0,]
+
+The form surface         :,0.138564064609,mm²
+Surface of the face      :,0.0346410161526,mm²
+
+Volume of the form       :,0.00346410161526,mm³
+Weight                   :,3.46410161526e-06,g, Density:,1.0
+
+Center of the shape      :, X:,-2.30581526095e-12,mm, Y:,5.76420855491e-13,mm, Z:,0.0,mm
+Center of mass           :, X:,-1.57591494092e-13,mm, Y:,5.85914857402e-14,mm, Z:,9.78069400185e-19,mm
+BoundBox                 :, X:,0.230940107681,mm, Y:,0.200000000004,mm, Z:,0.1,mm
+BoundBox Diagonal        :,0.321455025373,mm
+
+Direction                :,Vector (0.0, 0.0, 0.1)
+ValueAt                  :,Vector (0.11547005383834653, 0.0, 0.05)
+
+Matrix of inertia        :,mm^5
+                         :, X:,1.25092558331e-05, Y:,-1.41508077026e-16, Z:,-2.31076660429e-23, :,0.0
+                         :, X:,-1.41508077026e-16, Y:,1.25092558333e-05, Z:,5.29395592055e-23, :,0.0
+                         :, X:,-2.31076660429e-23, Y:,5.29395592055e-23, Z:,1.92450089743e-05, :,0.0
+                         :, X:,0.0, Y:,0.0, Z:,0.0, :,1.0
+
+Matrix inertia with mass :,gmm²
+                         :, X:,1.25092558331e-08, Y:,-1.41508077026e-19, Z:,-2.31076660429e-26
+                         :, X:,-1.41508077026e-19, Y:,1.25092558333e-08, Z:,5.29395592055e-26
+                         :, X:,-2.31076660429e-26, Y:,5.29395592055e-26, Z:,1.92450089743e-08
+
+Matrix Determinant       :,3.0114875158e-15
+Determinant decimal      :,3.01148751580213310091415223233228739890135288413686165398530647507868707180023193359375E-15
+

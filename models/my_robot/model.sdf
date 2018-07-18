@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+<sdf version="1.5">
+  <model name="robot">
+    <static>false</static>
+    <link name="base_link">
+      <pose>0 0 .1 0 0 0</pose>
+			<inertial>
+				<pose>0 0 0 0 0 0</pose>
+				<mass>10</mass>
+				<inertia>
+					<ixx>0.0375277675</ixx>
+					<ixy>-4.24524231078E-13</ixy>
+					<ixz>-6.93229981287E-20</ixz>
+					<iyy>0.0375277675</iyy>
+					<iyz>1.588186776165E-19</iyz>
+					<izz>0.0577350269</izz>
+				</inertia>
+<!-- box 0.4 0.2 0.1
+				<inertia>
+					<ixx>4e-02</ixx>
+					<ixy>-5.7937053592e-18</ixy>
+					<ixz>5.8445273361e-20</ixz>
+					<iyy>0.000136e+3</iyy>
+					<iyz>0.0</iyz>
+					<izz>0.00016e+3</izz>
+				</inertia>
+-->
+			</inertial>
+      <collision name="collision">
+        <geometry>
+		      <mesh>
+		        <uri>model://my_robot/my_body.stl</uri>
+		      </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+		      <mesh>
+		        <uri>model://my_robot/my_body.stl</uri>
+		      </mesh>
+        </geometry>
+      </visual>
+
+      <collision name='caster_collision'>
+        <pose>-0.15 0 -0.05 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>.05</radius>
+          </sphere>
+        </geometry>
+
+        <surface>
+          <friction>
+            <ode>
+              <mu>0</mu>
+              <mu2>0</mu2>
+              <slip1>1.0</slip1>
+              <slip2>1.0</slip2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+
+		  <visual name='caster_visual'>
+		    <pose>-0.15 0 -0.05 0 0 0</pose>
+		    <geometry>
+		      <sphere>
+		        <radius>.05</radius>
+		      </sphere>
+		    </geometry>
+		  </visual>
+    </link>
+
+    <link name="left_wheel">
+      <pose>0.1 0.13 0.1 0 1.5707 1.5707</pose>
+			<inertial>
+				<pose>0 0 0 0 0 0</pose>
+				<mass>2</mass>
+				<inertia>
+					<ixx>0.0048923761</ixx>
+					<ixy>3.9035319588485E-19</ixy>
+					<ixz>-9.1320739625865E-20</ixz>
+					<iyy>0.0048923761</iyy>
+					<iyz>-1.7930785295525E-21</iyz>
+					<izz>0.0090320789</izz>
+				</inertia>
+			</inertial>
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <radius>.1</radius>
+            <length>.05</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>.1</radius>
+            <length>.05</length>
+          </cylinder>
+        </geometry>
+      </visual>
+    </link>
+
+    <link name="arm1">
+      <pose>-0.05 0 0.3 0 0 0</pose>
+			<inertial>
+				<pose>0 0 0 0 0 0</pose>
+				<mass>0.5</mass>
+				<inertia>
+					<ixx>0.0026884179</ixx>
+					<ixy>8.15623347798E-21</ixy>
+					<ixz>1.852884572119E-20</ixz>
+					<iyy>0.0026884179</iyy>
+					<iyz>7.58262653183E-37</iyz>
+					<izz>0.0002226604</izz>
+				</inertia>
+			</inertial>
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <radius>0.030</radius>
+            <length>0.25</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>0.030</radius>
+            <length>0.25</length>
+          </cylinder>
+        </geometry>
+      </visual>
+    </link>
+
+    <link name="right_wheel">
+      <pose>0.1 -0.13 0.1 0 1.5707 1.5707</pose>
+			<inertial>
+				<pose>0 0 0 0 0 0</pose>
+				<mass>2</mass>
+				<inertia>
+					<ixx>0.0048923761</ixx>
+					<ixy>3.9035319588485E-19</ixy>
+					<ixz>-9.1320739625865E-20</ixz>
+					<iyy>0.0048923761</iyy>
+					<iyz>-1.7930785295525E-21</iyz>
+					<izz>0.0090320789</izz>
+				</inertia>
+			</inertial>
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <radius>.1</radius>
+            <length>.05</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>.1</radius>
+            <length>.05</length>
+          </cylinder>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint type="revolute" name="shoulder">
+      <pose>0 0 -0.127 0 0 0</pose>
+      <child>arm1</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <upper>1.57</upper>
+          <lower>-1.57</lower>
+        </limit>
+      </axis>
+    </joint>
+
+    <joint type="revolute" name="left_wheel_hinge">
+      <pose>0 0 0 0 0 0</pose>
+      <child>left_wheel</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+
+    <joint type="revolute" name="right_wheel_hinge">
+      <pose>0 0 0 0 0 0</pose>
+      <child>right_wheel</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+
+		<plugin filename="libMyDiffDrivePlugin.so" name="diff_drive">
+			<left_joint>left_wheel_hinge</left_joint>
+			<right_joint>right_wheel_hinge</right_joint>
+			<shoulderTAG>shoulder</shoulderTAG>
+			<torque>5</torque>
+		</plugin>
+
+  </model>
+</sdf>
+

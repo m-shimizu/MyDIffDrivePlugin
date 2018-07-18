@@ -1,0 +1,46 @@
+Info on the element
+___________________
+05/01/2018 16:23:11
+
+Name of the document      :,Unnamed
+Label Name                :,Pad
+Internal Name             :,Pad
+Name of the element       :,Face3
+Object type               :,Solid
+Mouse coordinates         :,  X:,0.0,mm,  Y:,0.0,mm,  Z:,0.0,mm
+Perimeter of face         :,0.628318530718,mm
+Perimeter of the shape    :,1.30663706144,mm
+
+
+Plan                     :, XY:,0.0°, coordinates:,[,0.0 , 0.0,]  [,0.0 , 0.0,]
+Plan                     :, YZ:,0.0°, coordinates:,[,0.0 , 0.0,]  [,0.0 , 0.0,]
+Plan                     :, ZX:,0.0°, coordinates:,[,0.0 , 0.0,]  [,0.0 , 0.0,]
+
+The form surface         :,0.0942477796077,mm²
+Surface of the face      :,0.0314159265359,mm²
+
+Volume of the form       :,0.00157079632679,mm³
+Weight                   :,1.57079632679e-06,g, Density:,1.0
+
+Center of the shape      :, X:,0.000180125572874,mm, Y:,0.0,mm, Z:,0.0,mm
+Center of mass           :, X:,-1.07847584414e-17,mm, Y:,-2.15596354856e-18,mm, Z:,5.39237922069e-19,mm
+BoundBox                 :, X:,0.199639748854,mm, Y:,0.199819793241,mm, Z:,0.05,mm
+BoundBox Diagonal        :,0.286851841712,mm
+
+Direction                :,Vector (0.0, 0.0, 0.05)
+ValueAt                  :,Vector (0.10000000000000009, 0.0, 0.025)
+
+Matrix of inertia        :,mm^5
+                         :, X:,4.25424005174e-06, Y:,3.39437561639e-22, Z:,-7.94093388051e-23, :,0.0
+                         :, X:,3.39437561639e-22, Y:,4.25424005174e-06, Z:,-1.55919872135e-24, :,0.0
+                         :, X:,-7.94093388051e-23, Y:,-1.55919872135e-24, Z:,7.85398163397e-06, :,0.0
+                         :, X:,0.0, Y:,0.0, Z:,0.0, :,1.0
+
+Matrix inertia with mass :,gmm²
+                         :, X:,4.25424005174e-09, Y:,3.39437561639e-25, Z:,-7.94093388051e-26
+                         :, X:,3.39437561639e-25, Y:,4.25424005174e-09, Z:,-1.55919872135e-27
+                         :, X:,-7.94093388051e-26, Y:,-1.55919872135e-27, Z:,7.85398163397e-09
+
+Matrix Determinant       :,1.42145745415e-16
+Determinant decimal      :,1.42145745414789699621236169443211278951491182039046368146273380261845886707305908203125E-16
+
