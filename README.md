@@ -14,5 +14,16 @@ Build the program.
     $ cmake ..  
     $ make  
 
+## Add the plugin tag in your model.sdf.  
+You can add below codes into your model.sdf to use your MyDIffDrivePlugin.
+
+'''
+    <plugin filename="libDiffDrivePlugin.so" name="diff_drive">
+      <left_joint>left_wheel_hinge</left_joint>
+      <right_joint>right_wheel_hinge</right_joint>
+      <shoulderTAG>shoulder</shoulderTAG>
+      <torque>5</torque>
+    </plugin>
+'''
 
 Edited: 12 July 2018
