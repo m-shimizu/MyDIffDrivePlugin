@@ -33,4 +33,9 @@ You can spawn your robot by below command.
     $ . setup.bash  
     $ gazebo myrobot.world  
 
+## How to control your robot
+You can control your robot , press keys(q,a,z,e,d,c) focused on the Gazebo window.  
+This is realized by using libKeyboardGUIPlugin.so.  
+You can find more details by visiting [here](https://bitbucket.org/osrf/gazebo/pull-requests/2652/added-support-for-tracked-vehicles/diff) and [here](https://github.com/osrf/car_demo/issues/25).  
+
 Edited: 18 July 2018
