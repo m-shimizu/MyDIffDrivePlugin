@@ -43,20 +43,21 @@ void DiffDrivePlugin::Load(physics::ModelPtr _model,
   this->velSub = this->node->Subscribe(std::string("~/") +
       this->model->GetName() + "/vel_cmd", &DiffDrivePlugin::OnVelMsg, this);
 
+  // Read joint name of the left joint.
   if (!_sdf->HasElement("left_joint"))
     gzerr << "DiffDrive plugin missing <left_joint> element\n";
-
-  if (!_sdf->HasElement("right_joint"))
-    gzerr << "DiffDrive plugin missing <right_joint> element\n";
-
-  if (!_sdf->HasElement("sholder_joint"))
-    gzerr << "DiffDrive plugin missing <sholder_joint> element\n";
-
   this->leftJoint = _model->GetJoint(
       _sdf->GetElement("left_joint")->Get<std::string>());
+
+  // Read joint name of the right joint.
+  if (!_sdf->HasElement("right_joint"))
+    gzerr << "DiffDrive plugin missing <right_joint> element\n";
   this->rightJoint = _model->GetJoint(
       _sdf->GetElement("right_joint")->Get<std::string>());
 
+  // Sample : Read joint name of the sholder joint.
+  if (!_sdf->HasElement("sholder_joint"))
+    gzerr << "DiffDrive plugin missing <sholder_joint> element\n";
   this->sholderJoint = _model->GetJoint(
       _sdf->GetElement("sholder_joint")->Get<std::string>());
 
