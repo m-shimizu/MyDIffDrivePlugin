@@ -15,7 +15,7 @@ Build the program.
     $ make  
 
 ## Add the plugin tag in your model.sdf.  
-You can add below codes into your model.sdf to use your MyDIffDrivePlugin.
+You can add below codes after <joint> tags in your model.sdf to use your MyDIffDrivePlugin.
 
 ```
     <plugin filename="libMyDiffDrivePlugin.so" name="diff_drive">  
