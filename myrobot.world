@@ -110,6 +110,8 @@
       </light>
     </state>
     <gui fullscreen='0'>
+      <!-- KEYPUBLISHER SEE: https://github.com/osrf/car_demo/issues/25 -->
+      <plugin name='keyboard' filename='libKeyboardGUIPlugin.so'/>
       <camera name='user_camera'>
         <pose frame=''>5 -5 2 0 0.275643 2.35619</pose>
         <view_controller>orbit</view_controller>

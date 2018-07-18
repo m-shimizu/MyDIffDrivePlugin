@@ -34,13 +34,14 @@ namespace gazebo
     private: void OnUpdate();
 
     private: void OnVelMsg(ConstPosePtr &_msg);
+    private: void OnKeyPress(ConstAnyPtr &_msg);
     private: void check_key_command(void);
 
     private: transport::NodePtr node;
-    private: transport::SubscriberPtr velSub;
+    private: transport::SubscriberPtr velSub, keySub;
 
     private: physics::ModelPtr model;
-    private: physics::JointPtr leftJoint, rightJoint, sholderJoint;
+    private: physics::JointPtr leftJoint, rightJoint, shoulderJoint;
     private: event::ConnectionPtr updateConnection;
     private: double wheelSpeed[2];
     private: double torque;

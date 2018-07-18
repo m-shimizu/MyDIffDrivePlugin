@@ -38,10 +38,12 @@ void DiffDrivePlugin::Load(physics::ModelPtr _model,
   this->model = _model;
 
   this->node = transport::NodePtr(new transport::Node());
+#if(GAZEBO_MAJOR_VERSION <= 7)
   this->node->Init(this->model->GetWorld()->GetName());
-
-  this->velSub = this->node->Subscribe(std::string("~/") +
-      this->model->GetName() + "/vel_cmd", &DiffDrivePlugin::OnVelMsg, this);
+#endif
+#if(GAZEBO_MAJOR_VERSION >= 8)
+  this->node->Init(this->model->GetWorld()->Name());
+#endif
 
   // Read joint name of the left joint.
   if (!_sdf->HasElement("left_joint"))
@@ -61,13 +63,16 @@ void DiffDrivePlugin::Load(physics::ModelPtr _model,
     gzerr << "Unable to find right joint["
           << _sdf->GetElement("right_joint")->Get<std::string>() << "]\n";
 
-  // Sample : Read joint name of the sholder joint.
-/*  if (!_sdf->HasElement("sholder_joint"))
-    gzerr << "DiffDrive plugin missing <sholder_joint> element\n";
-  this->sholderJoint = _model->GetJoint(
-      _sdf->GetElement("sholder_joint")->Get<std::string>());
-*/
+  // Sample : Read joint name of the shoulder joint.
+  if (!_sdf->HasElement("shoulderTAG"))
+    gzerr << "DiffDrive plugin missing <shoulderTAG> element\n";
+  this->shoulderJoint = _model->GetJoint(
+      _sdf->GetElement("shoulderTAG")->Get<std::string>());
+  if (!this->shoulderJoint)
+    gzerr << "Unable to find shoulder joint["
+          << _sdf->GetElement("shoulderTAG")->Get<std::string>() << "]\n";
 
+/*
   if (_sdf->HasElement("torque"))
   {
     this->torque = _sdf->GetElement("torque")->Get<double>();
@@ -75,6 +80,18 @@ void DiffDrivePlugin::Load(physics::ModelPtr _model,
            << "and the torque tag is no longer used in this plugin."
            << std::endl;
   }
+*/
+
+// About details of keyboard topic , see below URL.
+// https://bitbucket.org/osrf/gazebo/pull-requests/2652/added-support-for-tracked-vehicles/diff
+// This needs KEYPUBLISHER(SEE: https://github.com/osrf/car_demo/issues/25), 
+// Add <plugin name='keyboard' filename='libKeyboardGUIPlugin.so'/> inside <gui></gui> in your world file. 
+
+  this->keySub = this->node->Subscribe(std::string("~/keyboard/keypress"), 
+      &DiffDrivePlugin::OnKeyPress, this);
+
+  this->velSub = this->node->Subscribe(std::string("~/") +
+      this->model->GetName() + "/vel_cmd", &DiffDrivePlugin::OnVelMsg, this);
 
   this->updateConnection = event::Events::ConnectWorldUpdateBegin(
           boost::bind(&DiffDrivePlugin::OnUpdate, this));
@@ -91,7 +108,12 @@ void DiffDrivePlugin::Init()
 
   math::Box bb = parent->GetBoundingBox();
   // This assumes that the largest dimension of the wheel is the diameter
+#if(GAZEBO_MAJOR_VERSION <= 7)
   this->wheelRadius = bb.GetSize().GetMax() * 0.5;
+#endif
+#if(GAZEBO_MAJOR_VERSION >= 8)
+  this->wheelRadius = bb.GetSize().Ign().Max() * 0.5;
+#endif
 }
 
 /////////////////////////////////////////////////
@@ -103,7 +125,7 @@ void DiffDrivePlugin::OnVelMsg(ConstPosePtr &_msg)
 #if(GAZEBO_MAJOR_VERSION == 5)
   va =  msgs::Convert(_msg->orientation()).GetAsEuler().z;
 #endif
-#if(GAZEBO_MAJOR_VERSION == 7)
+#if(GAZEBO_MAJOR_VERSION >= 7)
   va =  msgs::ConvertIgn(_msg->orientation()).Euler().Z();
 #endif
 
@@ -117,7 +139,41 @@ void DiffDrivePlugin::OnVelMsg(ConstPosePtr &_msg)
   this->rightJoint->SetVelocity(0, rightVelDesired);
 }
 
-int	doslike_kbhit(void)
+#define _MAX(X,Y)	((X > Y)?X:Y)
+#define _MIN(X,Y)	((X < Y)?X:Y)
+
+void	DiffDrivePlugin::OnKeyPress(ConstAnyPtr &_msg)
+{
+  const auto key = static_cast<const unsigned int>(_msg->int_value());
+	static float	left_v = 0, right_v = 0;
+  gzmsg << "KEY(" << key << ") pressed\n";
+	switch(key)
+	{
+		case 'q': left_v += 0.1;
+                                left_v = _MIN(left_v, 1);
+			  break;
+		case 'a': left_v = 0;
+			  break;
+		case 'z': left_v -= 0.1;
+                                left_v = _MAX(left_v, -1);
+			  break;
+		case 'e': right_v += 0.1;
+                                right_v = _MIN(right_v, 1);
+			  break;
+		case 'd': right_v = 0;
+			  break;
+		case 'c': right_v -= 0.1;
+                                right_v = _MAX(right_v, -1);
+			  break;
+	}
+	this->leftJoint->SetVelocity(0, left_v);
+	this->rightJoint->SetVelocity(0, right_v);
+}
+
+// Before Gazebo7 including Gazebo7, doslike_kbhit and doslike_getch worked correctly.
+// But after Gazebo8, they no longer worked.
+// Especially, the funcion tcsetattr won't work.
+inline int	doslike_kbhit(void)
 {
 	struct termios	oldt, newt;
 	int	ch;
@@ -140,7 +196,7 @@ int	doslike_kbhit(void)
 	return 0;
 }
 
-int	doslike_getch(void)
+inline int	doslike_getch(void)
 {
 	static struct termios	oldt, newt;
 	tcgetattr(STDIN_FILENO, &oldt);
@@ -152,9 +208,6 @@ int	doslike_getch(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
 	return c;
 }
-
-#define _MAX(X,Y)	((X > Y)?X:Y)
-#define _MIN(X,Y)	((X < Y)?X:Y)
 
 void	DiffDrivePlugin::check_key_command(void)
 {
@@ -204,5 +257,5 @@ void DiffDrivePlugin::OnUpdate()
   common::Time stepTime = currTime - this->prevUpdateTime;
   */
 
-  check_key_command();
+//  check_key_command();
 }
