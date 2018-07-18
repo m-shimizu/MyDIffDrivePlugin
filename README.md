@@ -26,4 +26,11 @@ You can add below codes after <joint> tags in your model.sdf to use your MyDIffD
     </plugin>  
 ```
 
-Edited: 12 July 2018
+## How to spawn your robot  
+You can spawn your robot by below command.  
+
+    $ cd MyDIffDrivePlugin  
+    $ . setup.bash  
+    $ gazebo myrobot.world  
+
+Edited: 18 July 2018
