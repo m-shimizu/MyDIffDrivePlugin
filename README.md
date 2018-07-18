@@ -18,7 +18,7 @@ Build the program.
 You can add below codes into your model.sdf to use your MyDIffDrivePlugin.
 
 '''
-    <plugin filename="libDiffDrivePlugin.so" name="diff_drive">
+    <plugin filename="libMyDiffDrivePlugin.so" name="diff_drive">
       <left_joint>left_wheel_hinge</left_joint>
       <right_joint>right_wheel_hinge</right_joint>
       <shoulderTAG>shoulder</shoulderTAG>
