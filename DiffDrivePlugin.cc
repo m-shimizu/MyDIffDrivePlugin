@@ -100,19 +100,22 @@ void DiffDrivePlugin::Load(physics::ModelPtr _model,
 /////////////////////////////////////////////////
 void DiffDrivePlugin::Init()
 {
-  this->wheelSeparation = this->leftJoint->GetAnchor(0).Distance(
-      this->rightJoint->GetAnchor(0));
+  this->wheelSeparation = this->leftJoint->Anchor(0).Distance(
+      this->rightJoint->Anchor(0));
 
   physics::EntityPtr parent = boost::dynamic_pointer_cast<physics::Entity>(
       this->leftJoint->GetChild());
 
-  math::Box bb = parent->GetBoundingBox();
+  ignition::math::Box bb = parent->BoundingBox();
   // This assumes that the largest dimension of the wheel is the diameter
-#if(GAZEBO_MAJOR_VERSION <= 7)
+#if(GAZEBO_MAJOR_VERSION < 8)
   this->wheelRadius = bb.GetSize().GetMax() * 0.5;
 #endif
-#if(GAZEBO_MAJOR_VERSION >= 8)
+#if(GAZEBO_MAJOR_VERSION >= 8 && GAZEBO_MAJOR_VERSION < 9)
   this->wheelRadius = bb.GetSize().Ign().Max() * 0.5;
+#endif
+#if(GAZEBO_MAJOR_VERSION >= 9)
+  this->wheelRadius = bb.Size().Max() * 0.5;
 #endif
 }
 
